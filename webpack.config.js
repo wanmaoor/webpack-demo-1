@@ -8,5 +8,10 @@ module.exports = {
     filename: "[name].[contenthash].js",
     path: resolve(__dirname, "dist") //__dirname 代表当前目录，path.resolve()将一段路径解析为绝对路径
   },
-  plugins: [new HtmlWebpackPlugin()]
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: "webpack demo",
+      template: "src/assets/test.html"
+    })
+  ]
 };
