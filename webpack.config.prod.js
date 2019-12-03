@@ -1,27 +1,31 @@
-const { resolve } = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const base = require("./webpack.base");
+
 
 module.exports = {
-  mode: "development",
-  entry: "./src/index.js",
-  output: {
-    filename: "[name].[contenthash].js",
-    path: resolve(__dirname, "dist")
-  },
+  ...base,
+  mode: "production",
   plugins: [
-    new HtmlWebpackPlugin({
-      title: "webpack demo",
-      template: "src/assets/test.html"
+    ...base.plugins,
+    new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css",
+      chunkFilename: "[id].css"
     })
   ],
-  devServer: {
-    contentBase: "./dist"
-  },
   module: {
     rules: [
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"]
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: "../",
+              hmr: process.env.NODE_ENV === "development"
+            }
+          },
+          "css-loader"
+        ]
       }
     ]
   }
