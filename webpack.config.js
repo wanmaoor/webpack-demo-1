@@ -1,7 +1,7 @@
 const base = require('./webpack.base')
+const merge = require("webpack-merge");
 
-module.exports = {
-  ...base,
+module.exports = merge(base, {
   mode: "development",
   module: {
     rules: [
@@ -11,4 +11,5 @@ module.exports = {
       }
     ]
   }
-};
+});
+
