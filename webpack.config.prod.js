@@ -1,8 +1,8 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const base = require("./webpack.base");
-const merge = require("webpack-merge");
 
-module.exports = merge(base, {
+module.exports = {
+  ...base,
   mode: "production",
   plugins: [
     ...base.plugins,
@@ -13,14 +13,14 @@ module.exports = merge(base, {
   ],
   module: {
     rules: [
+      ...base.module.rules,
       {
         test: /\.css$/i,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: "../",
-              hmr: process.env.NODE_ENV === "development"
+              publicPath: "../"
             }
           },
           "css-loader"
@@ -28,4 +28,4 @@ module.exports = merge(base, {
       }
     ]
   }
-});
+};
